@@ -1,0 +1,5 @@
+**Inputs fornecidos:**
+- O cenário completo.
+- Os guardrails definidos pelo Product Specialist: *"(1) Sempre citar fonte. (2) Nunca inventar prazos ou valores. (3) Quando não encontrar resposta, dizer explicitamente. (4) Responder em português formal."*
+- Uma explicação de alucinação: *"LLMs podem gerar respostas que parecem corretas e confiantes mas são fabricadas. Isso é especialmente perigoso quando o modelo 'preenche lacunas' misturando informação real com inferências não fundamentadas."*
+- Uma explicação de problemas de contexto: *"Além da alucinação, existem falhas ligadas ao gerenciamento de contexto: context rot (em conversas longas, informação fornecida no início é 'esquecida'), lost in the middle (informação no meio de um contexto grande é menos processada que no início ou no fim), chunk errado (o retriever traz um trecho irrelevante ou de versão errada que contamina a resposta), e context overflow (a pergunta + chunks + prompt excedem a janela do modelo, causando truncamento)."*
