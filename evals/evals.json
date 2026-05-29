@@ -1,0 +1,23 @@
+{
+  "skill_name": "product-specialist",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Tenho uma plataforma SaaS de CRM que permite automação de campanhas e relatórios de vendas. O time de vendas diz que alguns leads estão sendo marcados como ‘sem interesse’ mesmo quando há evidências de engajamento. Ajude-me a criar um diagnóstico do problema, separar o que é bug do que é comportamento esperado, e sugerir como comunicar isso ao time de vendas e à engenharia.",
+      "expected_output": "Análise de triagem com causa provável, ações imediatas, recomendação técnica e comunicação segmentada para vendas e engenharia.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Preciso preparar um plano de treinamento para suporte sobre um novo recurso de analytics que agrega métricas de uso de produto. O público é o time de atendimento e os gerentes de conta. Crie o objetivo, formato, agenda e exemplos de conteúdo para essa enablement session.",
+      "expected_output": "Um plano de habilitação com objetivo, público, formato, estrutura de sessão e exemplos de conteúdo práticos.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "O roadmap do produto está ficando pesado e temos que decidir entre priorizar melhoria de desempenho ou lançamento de um conector com um marketplace importante. Ajude-me a comparar os dois temas com base em impacto do cliente, custo, risco e alinhamento com o produto.",
+      "expected_output": "Uma comparação estruturada de duas opções com recomendações e critérios de decisão.",
+      "files": []
+    }
+  ]
+}

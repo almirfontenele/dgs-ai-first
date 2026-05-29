@@ -1,0 +1,100 @@
+
+### PRODUCT SPECIALIST
+
+#### Exercício 1.1 — Mapeamento de intent com engenharia de contexto
+
+**Contexto:** Você é o Product Specialist do projeto e vai conduzir a fase de Intent + Discovery. Antes de entrevistar qualquer stakeholder, você precisa usar IA para pré-analisar a documentação disponível e gerar hipóteses. Mas não basta jogar tudo no prompt: a forma como você organiza e sequencia a informação para o modelo determina a qualidade do resultado.
+
+**Ferramentas a utilizar:** Claude (chat)
+
+**Inputs fornecidos:**
+- O cenário completo.
+- Os 5 documentos-chave da NovaTech com conteúdo completo (ver **Anexo A** — para a etapa 2, os documentos individuais estão disponíveis na pasta `anexo-a-documentos-individuais/`):
+  1. *"POL-001: Política de Devolução de Mercadorias"* — Define regras para devolução em até 7 dias, com exceções para carga perigosa.
+  2. *"PROC-042: Procedimento de Cálculo de Frete Especial"* — Fórmula para fretes acima de 500kg com tabela de multiplicadores por região.
+  3. *"SLA-2024: Tabela de SLA por Tipo de Cliente"* — Prazos de resposta diferenciados para clientes Gold, Silver e Standard.
+  4. *"PROC-042-v2: Procedimento de Cálculo de Frete (Revisado)"* — Mesma numeração do item 2, mas com multiplicadores diferentes. Sem indicação de qual é o vigente.
+  5. *"FAQ-Atendimento: Perguntas Frequentes do Time de Suporte"* — Documento informal com 47 perguntas e respostas escritas por atendentes experientes, sem validação formal.
+- Conceito de engenharia de contexto: *"Prompt engineering é como pedir. Context engineering é decidir o que o modelo vê antes de responder. Inclui: orçamento de atenção (modelos têm capacidade limitada — informação em excesso degrada a qualidade), progressive disclosure (alimentar o modelo em etapas, não tudo de uma vez), e priorização (colocar a informação mais relevante no início do contexto)."*
+
+**Tarefa:**
+1. No **Claude**, projete e execute uma estratégia de análise em 3 etapas, usando engenharia de contexto:
+   - **Etapa 1 — Visão geral:** Forneça ao Claude apenas os títulos, metadados e resumos dos 5 documentos (não o conteúdo completo). Peça um mapa de temas cobertos e hipóteses de gaps.
+   - **Etapa 2 — Análise profunda:** Com base no mapa da etapa 1, selecione os 2 documentos que mais precisam de análise (ex: os dois PROC-042 contraditórios). Forneça o conteúdo completo apenas desses 2 e peça análise de inconsistências.
+   - **Etapa 3 — Cruzamento:** Forneça ao Claude o output das etapas 1 e 2 junto com o FAQ-Atendimento completo. Peça que cruze as inconsistências encontradas com as práticas informais do FAQ.
+
+2. Para cada etapa, documente: por que escolheu fornecer essa informação nessa ordem (decisão de contexto), o que obteve como output, e como a qualidade variou entre as etapas.
+
+3. Identifique ao menos 2 riscos que encontrou e descreva como levaria isso para o discovery humano.
+
+4. Reflexão: o que teria acontecido se você tivesse colado os 5 documentos completos de uma vez no primeiro prompt? Compare com o resultado da abordagem progressiva.
+
+**Entregável:** A estratégia de contexto documentada, os 3 prompts com outputs, a análise crítica de cada etapa, a reflexão sobre progressive disclosure, e o mapa de riscos.
+
+**Critérios de avaliação:**
+- A estratégia de 3 etapas demonstra progressive disclosure (não joga tudo de uma vez).
+- A escolha de quais documentos analisar em profundidade na etapa 2 é justificada.
+- A reflexão sobre "tudo de uma vez vs. progressivo" demonstra compreensão de orçamento de atenção e context rot.
+- Os riscos identificados são reais e a proposta de tratamento no discovery é concreta.
+
+---
+
+#### Exercício 1.2 — Design de jornada com componente de IA
+
+**Contexto:** Com base no discovery, você precisa mapear a jornada do atendente usando o assistente de IA.
+
+**Ferramentas a utilizar:** Claude (chat) + Claude Design
+
+**Inputs fornecidos:**
+- O cenário completo.
+- Dados do discovery (simulados): *"Os atendentes hoje abrem em média 4 fontes diferentes por chamado. As dúvidas mais comuns são sobre prazos de entrega (35%), regras de frete (25%), política de devolução (20%) e outros (20%). Em 15% dos casos, o atendente não encontra resposta e escala para o supervisor."*
+
+**Tarefa:**
+1. Usando o **Claude**, elabore a jornada do atendente em formato de texto estruturado, incluindo:
+   - O fluxo principal: atendente recebe dúvida → consulta o assistente → recebe resposta com fonte → usa no atendimento.
+   - O fluxo de fallback: o que acontece quando o assistente não tem confiança na resposta ou quando o atendente discorda.
+   - O fluxo de feedback: como o atendente sinaliza que uma resposta estava errada, desatualizada ou incompleta.
+   - Ao menos 2 guardrails de comportamento do assistente (ex: "nunca inventar um prazo que não esteja documentado").
+
+2. Usando o **Claude Design**, transforme a jornada textual em um diagrama visual de fluxo que mostre os 3 caminhos (principal, fallback, feedback) de forma clara para apresentar ao time e ao cliente.
+
+**Entregável:** A jornada textual, o diagrama visual gerado pelo Claude Design, e evidência do uso das ferramentas.
+
+**Critérios de avaliação:**
+- A jornada inclui o caminho feliz E os caminhos de exceção.
+- Os guardrails são específicos ao domínio (logística/atendimento), não genéricos.
+- O fluxo de feedback mostra entendimento de que RAG precisa de manutenção contínua (feedback loop).
+- O diagrama visual é coerente com o texto e legível para não-técnicos.
+
+---
+
+#### Exercício 1.3 — Especificação de requisitos de RAG do ponto de vista do produto
+
+**Contexto:** Você precisa especificar os requisitos que o pipeline de RAG deve atender para que o assistente entregue valor real para os atendentes.
+
+**Ferramentas a utilizar:** Claude (chat)
+
+**Inputs fornecidos:**
+- O cenário completo.
+- Dados do discovery.
+- A documentação da NovaTech (ver **Anexo A**) como exemplo concreto das contradições e gaps que a spec precisa endereçar.
+- Uma explicação simplificada do pipeline de RAG: *"Documentos são divididos em pedaços (chunks), transformados em representações numéricas (embeddings), armazenados num banco vetorial, e recuperados por similaridade quando o usuário faz uma pergunta. O LLM então gera uma resposta usando os chunks recuperados como contexto."*
+
+**Tarefa:**
+Usando o **Claude**, escreva uma especificação de requisitos do produto (não técnica, mas precisa) que cubra:
+
+1. Quais fontes de dados devem ser indexadas (e quais não — ex: documentos obsoletos devem ser excluídos ou marcados?).
+2. Como o assistente deve lidar com documentos contraditórios (ex: duas versões do mesmo procedimento).
+3. Qual o comportamento esperado quando a pergunta do atendente não tem resposta na base (o assistente deve dizer "não encontrei" ou tentar responder com conhecimento geral?).
+4. Requisitos de atualização: quando novos documentos são publicados, em quanto tempo devem estar disponíveis no assistente?
+5. Requisitos de rastreabilidade: toda resposta deve citar a fonte? Deve mostrar o trecho relevante?
+
+Itere com o Claude: apresente a primeira versão e peça ao Claude que identifique gaps ou ambiguidades na sua especificação. Refine com base no feedback.
+
+**Entregável:** A especificação final e o histórico de iteração com o Claude mostrando a versão inicial, o feedback do Claude e a versão refinada.
+
+**Critérios de avaliação:**
+- Os requisitos demonstram entendimento de que a qualidade do RAG depende da curadoria dos dados, não só da tecnologia.
+- O tratamento de contradições e ausência de resposta mostra maturidade de produto.
+- Os requisitos são testáveis (o QA conseguiria verificar cada um).
+- A iteração com o Claude demonstra capacidade de usar IA como revisor, não apenas gerador.
