@@ -217,6 +217,83 @@ Feedback sem ação = ruído. Antes de implementar um mecanismo de feedback, ent
 
 ---
 
+### 5.4 Smoke Test Automatizado com Golden Dataset (Antes de Cada Deploy)
+
+**Contexto:** LLMs/RAG são não-determinísticos. Um "fix" para frete pode acidentalmente quebrar devolução se respostas forem ajustadas de forma ampla.
+
+**Solução: Golden Dataset + LLM-as-a-Judge**
+
+**Golden Dataset (criado em D-5, antes do go-live):**
+- Conjunto fixo de **15-20 perguntas críticas** distribuídas por categoria:
+  - Frete: 4-5 perguntas (zona, multiplicador, prazos)
+  - Devolução: 4-5 perguntas (prazos, categorias inelegíveis, exceptions)
+  - SLA: 4-5 perguntas (por tipo de atendimento)
+  - Geral: 2-3 perguntas (validação de fonte, negação clara)
+
+- Cada pergunta tem uma **resposta gabaritada** (ground truth):
+  ```
+  Q: "Qual é o multiplicador de frete para zona 3?"
+  Expected: "Conforme PROC-042-v2 vigente, zona 3 = 1.15x"
+  Citation: "PROC-042-v2 (vigência: 2026-05-01)"
+  ```
+
+**Script de Avaliação Automatizado (Tech Lead roda pre-deploy):**
+```
+Pseudocódigo (Python / Node):
+for each query in golden_dataset:
+  response = assistante.query(question)
+  
+  # LLM-as-a-Judge: Usa outro modelo (ou mesmo Claude) para avaliar
+  evaluation = judge_llm(
+    question=question,
+    actual_response=response,
+    expected_response=ground_truth,
+    criteria=["factual_accuracy", "source_citation", "clarity"]
+  )
+  
+  score = evaluation.score  # 1-10
+  if score < 7:
+    flag as "FAILED"
+    log: actual vs expected
+  
+summary:
+  pass_rate = (passed / total) * 100
+  if pass_rate < 95%:
+    BLOCK DEPLOY
+    report failures to Product Specialist
+  else:
+    OK to deploy
+```
+
+**Timing:**
+- **Cria Golden Dataset:** D-5 (durante testes pré-launch com 50 queries manuais)
+- **Roda smoke test:** Toda vez antes de deploy (2-3 min de execução)
+- **Threshold:** 95%+ pass rate; < 95% = investigar e retest
+
+**Exemplo de Falha Detectada:**
+```
+D+7 Fix: "Adicionar ao prompt: use sempre versão mais recente de PROC"
+
+Golden Dataset Smoke Test:
+├─ Frete queries:      4/4 PASS ✅
+├─ Devolução queries:  3/5 PASS ⚠️
+│  └─ FAILED: "Qual é o prazo de devolução para eletrônicos?"
+│     Esperado: "30 dias conforme POL-001"
+│     Obtido: "Conforme POL-001, retornáveis são 30 dias; não-retornáveis, 0"
+│     Problema: Resposta agora lida com ineligibilidade de categoria, 
+│               confundindo o critério de "30 dias"
+├─ SLA queries:       5/5 PASS ✅
+└─ Geral queries:     2/2 PASS ✅
+
+Pass Rate: 14/16 = 87.5% ❌ BELOW 95%
+Action: Revert; refine prompt; retest
+```
+
+**Responsável:** Tech Lead  
+**Artefato:** Script reutilizável + Golden Dataset versionado (git)
+
+---
+
 ### 5.2 Se Adoção < 50% em D+7 (Problema Crítico)
 
 **Investigação (imediato):**

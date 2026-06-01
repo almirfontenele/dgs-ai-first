@@ -89,8 +89,30 @@ A diretoria assumiu que o sistema funcionaria com a documentação existente, se
 **Mitigação:**  
 Sessão de kickoff com sponsor da NovaTech: propor modelo de "curador de documentação" (responsável dentro da NovaTech de manter a base atualizada, sinalizando documentos obsoletos, resolvendo contradições). Incluir nos entregáveis V1: guia de proprietário de documentação com processo de atualização.
 
+**Plano de Contingência (se NovaTech não nomear curador antes de D-5):**
+
+| Cenário | Ação | Duração | Custo |
+|---------|------|---------|-------|
+| **NovaTech nomeia curador no prazo** | Proceed normalmente | — | Incluído em escopo |
+| **NovaTech não consegue nomear (recursos, decisão pendente)** | **Opção A (Recomendada):** DB1 assume curadoria **temporária**, sob tarifa de consultoria extraordinária, focando estritamente em destravar go-live e estabilizar base nos primeiros 15 dias. Cliente estrutura papel permanente em paralelo. | 15 dias (máx) | +15 dias de Product Specialist / Tech Specialist |
+| — | **Opção B:** Atrasar go-live 2 semanas; NovaTech estrutura curadoria internamente; DB1 apoia como consultor (4 horas). | +14 dias | Estendido timeline |
+| — | **Opção C:** Go-live sem curador; base envelhece; risco elevado de qualidade degradar em semana 3+. **Não recomendado.** | — | — |
+
+**Opção A Escopo Detalhado (se acionada):**
+- **Objetivo:** Manter base em "manutenção" (não "curadoria ativa"), estritamente para destravar go-live e primeiras 2 semanas
+- **Responsabilidades (DB1, 15 dias max):**
+  - Revisar contradições documentadas residuais (PROC-042 v1 vs v2, etc.)
+  - Re-indexar documentos com metadata de vigência quando NovaTech submete versão nova
+  - Monitorar dashboard de qualidade; alertar sponsor se error rate > 10%
+  - Documentar playbook de curadoria para transferência ao cliente
+- **Fora de escopo:**
+  - Rewriting/reformatting de documentação (essa é responsabilidade de NovaTech)
+  - Decisões de policy (ex: quais documentos são obsoletos) — decide com NovaTech
+  - Suporte reativo contínuo (SLA apenas durante os 15 dias)
+- **Transferência (D+15):** NovaTech assume com novo curador; DB1 faz 2 horas de treinamento
+
 **Critério de Sucesso:**  
-Nomeação de curador responsável antes de go-live. Processo documentado de re-indexação de novos documentos (ciclo: submissão → validação → indexação).
+Curador permanente nomeado **antes de D-5**. Se Opção A acionada: documento de transição assinado por sponsor; novo curador em lugar por D+15 com zero perda de qualidade.
 
 ---
 
