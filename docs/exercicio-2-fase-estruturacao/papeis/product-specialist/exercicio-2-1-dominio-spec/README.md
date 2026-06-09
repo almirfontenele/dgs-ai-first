@@ -10,8 +10,8 @@ Antes de escrever a spec, você precisa recortar o domínio: quais são os bound
 ## Inputs Fornecidos
 
 ### Contexto Base
-- O cenário completo
-- A documentação da NovaTech (ver **Anexo A**)
+- O cenário completo (docs/fonte-da-verdade)
+- A documentação da NovaTech (ver **Anexo A** docs/anexos/anexo-a-documentacao-simulada-novatech.md)
 - Spec de requisitos de RAG da fase anterior: *"O assistente responde perguntas sobre SLAs, frete e devoluções. Fontes contraditórias devem mostrar ambas as versões. O assistente nunca inventa informações. Toda resposta cita fonte. Atualização em até 24h."*
 
 ### Fluxo SDD

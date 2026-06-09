@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "indexion-sdd": {
+      "source": "trkbt10/indexion-skills",
+      "sourceType": "github",
+      "skillPath": "skills/indexion-sdd/SKILL.md",
+      "computedHash": "57798c9b92bc0f49100ba545b3c68d164a3a38168e9c586d068bc3c45267bc00"
+    },
     "mcp-builder": {
       "source": "anthropics/skills",
       "sourceType": "github",
