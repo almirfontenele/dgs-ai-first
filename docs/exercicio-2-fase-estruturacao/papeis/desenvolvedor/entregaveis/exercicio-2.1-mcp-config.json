@@ -1,0 +1,85 @@
+{
+  "mcpServers": {
+    "github": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "./docs",
+        "./specs",
+        "./prompts",
+        "./skills",
+        "./src",
+        "./tests",
+        "./infra",
+        "./.mcp"
+      ]
+    },
+    "azureAiSearch": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@novatech/mcp-azure-ai-search"
+      ],
+      "env": {
+        "AZURE_SEARCH_ENDPOINT": "${AZURE_SEARCH_ENDPOINT}",
+        "AZURE_SEARCH_QUERY_KEY": "${AZURE_SEARCH_QUERY_KEY}",
+        "AZURE_SEARCH_INDEX_NAME": "${AZURE_SEARCH_INDEX_NAME}"
+      }
+    },
+    "azureOpenAI": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@novatech/mcp-azure-openai"
+      ],
+      "env": {
+        "AZURE_OPENAI_ENDPOINT": "${AZURE_OPENAI_ENDPOINT}",
+        "AZURE_OPENAI_API_KEY": "${AZURE_OPENAI_API_KEY}",
+        "AZURE_OPENAI_CHAT_DEPLOYMENT": "${AZURE_OPENAI_CHAT_DEPLOYMENT}",
+        "AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT": "${AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT}"
+      }
+    },
+    "azureDevOps": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@novatech/mcp-azure-devops"
+      ],
+      "env": {
+        "AZURE_DEVOPS_ORG_URL": "${AZURE_DEVOPS_ORG_URL}",
+        "AZURE_DEVOPS_PAT": "${AZURE_DEVOPS_PAT}",
+        "AZURE_DEVOPS_PROJECT": "${AZURE_DEVOPS_PROJECT}"
+      }
+    },
+    "confluence": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@novatech/mcp-confluence-readonly"
+      ],
+      "env": {
+        "CONFLUENCE_BASE_URL": "${CONFLUENCE_BASE_URL}",
+        "CONFLUENCE_EMAIL": "${CONFLUENCE_EMAIL}",
+        "CONFLUENCE_API_TOKEN": "${CONFLUENCE_API_TOKEN}",
+        "CONFLUENCE_SPACE_KEY": "${CONFLUENCE_SPACE_KEY}"
+      }
+    }
+  }
+}
