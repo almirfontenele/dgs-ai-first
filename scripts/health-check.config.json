@@ -1,0 +1,28 @@
+{
+  "_comment": "Configuração de fallback para o health-check. Prefira variáveis de ambiente em vez de editar este arquivo. Nunca commite credentials aqui.",
+  "github": {
+    "_comment": "Use GITHUB_PAT env var em vez de token aqui",
+    "token": ""
+  },
+  "azureAiSearch": {
+    "_comment": "Use AZURE_SEARCH_ENDPOINT e AZURE_SEARCH_KEY env vars",
+    "endpoint": "",
+    "key": ""
+  },
+  "azureOpenAI": {
+    "_comment": "Use AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_KEY e AZURE_OPENAI_DEPLOYMENT env vars",
+    "endpoint": "",
+    "key": "",
+    "deployment": "gpt-4o"
+  },
+  "azureDevOps": {
+    "_comment": "Use AZURE_DEVOPS_ORG_URL e AZURE_DEVOPS_PAT env vars",
+    "orgUrl": "",
+    "pat": ""
+  },
+  "confluence": {
+    "_comment": "Use CONFLUENCE_BASE_URL e CONFLUENCE_TOKEN env vars",
+    "baseUrl": "",
+    "token": ""
+  }
+}
