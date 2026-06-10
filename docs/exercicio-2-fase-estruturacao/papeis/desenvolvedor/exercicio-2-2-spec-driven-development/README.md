@@ -13,7 +13,7 @@ O Product Specialist escreveu o `requirements.md` do query endpoint. O Tech Lead
 
 ### Contexto Base
 - O cenário completo (NovaTech Logistics Assistant)
-- A estrutura do repositório (ver **Anexo C**)
+- A estrutura do repositório (ver **Anexo C** docs/anexos/anexo-c-estrutura-repositorio.md)
 - O `plan.md` simulado (ver seção "Plan — Query Endpoint" na tarefa 2.2.1)
 - Padrões do projeto:
   - TypeScript com Azure Functions v4

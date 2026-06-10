@@ -23,7 +23,7 @@ Exemplo RUIM:
 ## Inputs
 
 - Código implementado na Tarefa 2.2.2 (`src/functions/query.ts`)
-- Padrões do projeto (Anexo C — estrutura, conventions, logging style)
+- Padrões do projeto (Anexo C docs/anexos/anexo-c-estrutura-repositorio.md — estrutura, conventions, logging style)
 - Critérios de aceite da Tarefa 2.2.1 (o que era esperado)
 
 ## Entregáveis

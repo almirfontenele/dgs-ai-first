@@ -9,6 +9,8 @@
 
 Mapear os MCP servers necessários para o projeto, indicando o que cada um expõe, quem consome, se já existe como server público ou se precisa ser construído, e quais permissões mínimas devem ser aplicadas.
 
+**Referência de base:** O Anexo C (`docs/anexos/anexo-c-estrutura-repositorio.md`) define a estrutura do repositório `db1/novatech-assistant` e inclui um exemplo mínimo de configuração MCP com os servers GitHub e filesystem. Este mapeamento parte desse exemplo e adiciona os servers específicos do projeto NovaTech que o Anexo C identifica como necessários: Azure AI Search, Azure OpenAI, Azure DevOps e Confluence.
+
 ## 2. Inventário de MCP Servers
 
 | Server | O que expõe | Quem consome | Público ou custom? | Permissões mínimas |
@@ -22,8 +24,10 @@ Mapear os MCP servers necessários para o projeto, indicando o que cada um expõ
 
 ## 3. Justificativa Arquitetural
 
-1. Reutilizar servers públicos onde eles já cobrem bem o caso de uso reduz custo e reduz manutenção. GitHub e filesystem entram nessa categoria.
-2. Criar servers customizados apenas para integrações do ecossistema NovaTech que não têm cobertura genérica suficiente, como Azure AI Search, Azure OpenAI, Azure DevOps e Confluence.
+O Anexo C (`docs/anexos/anexo-c-estrutura-repositorio.md`) define que o arquivo de configuração deve ficar em `.mcp/mcp.json` e fornece o exemplo mínimo com GitHub e filesystem. Este mapeamento parte desse ponto de partida e justifica cada adição:
+
+1. Reutilizar servers públicos onde eles já cobrem bem o caso de uso reduz custo e reduz manutenção. GitHub e filesystem entram nessa categoria — ambos referenciados no exemplo do Anexo C.
+2. Criar servers customizados apenas para integrações do ecossistema NovaTech que não têm cobertura genérica suficiente, como Azure AI Search, Azure OpenAI, Azure DevOps e Confluence — listados como ferramentas do projeto no enunciado do exercício.
 3. Separar leitura, busca e geração evita permissões amplas demais e permite aplicar least privilege por capacidade, não apenas por ferramenta.
 4. Manter Confluence como read-only é obrigatório porque a documentação pode conter informação de negócio sensível e não deve ser alterada por agentes.
 
@@ -55,6 +59,22 @@ Mapear os MCP servers necessários para o projeto, indicando o que cada um expõ
 ### 4.6 Confluence
 - Somente leitura.
 - Espaços e páginas restritos ao conteúdo da NovaTech relevante para o projeto.
+
+## Processo com Copilot
+
+**Prompt inicial:** "Liste os MCP servers necessários para um assistente de suporte logístico que usa Azure AI Search, Azure OpenAI e Confluence como base de conhecimento. Para cada server indique o que expõe (tools, resources, prompts), quem consome e quais permissões mínimas aplicar."
+
+**Output gerado:** O Copilot listou 4 servers (GitHub, Azure AI Search, Azure OpenAI, Confluence) com permissões genéricas como "read" e "write" sem distinção granular entre tools e resources. Não incluiu filesystem nem Azure DevOps.
+
+**O que foi mantido:** A estrutura de tabela com colunas (server, expõe, quem consome, público/custom, permissões) e os 4 servers iniciais.
+
+**O que foi descartado/modificado:**
+- Permissões genéricas substituídas por escopos específicos por operação (ex: `query-only` para Azure AI Search; sem `delete_index`)
+- Adicionados `filesystem` (necessário para agentes de documentação) e `azureDevOps` (necessário para tracking de work items)
+- Coluna "público ou custom?" adicionada manualmente — Copilot não distinguiu servidores MCP públicos de implementações proprietárias
+- Justificativa arquitetural (seção 3) escrita manualmente após avaliar que o Copilot não documentou o raciocínio por trás das escolhas
+
+**Iteração:** Um segundo prompt pediu ao Copilot para revisar o Confluence e justificar por que deveria ser read-only. O output confirmou o risco de alteração acidental, o que reforçou a decisão e foi incorporado na seção 4.6.
 
 ## 5. Resultado Esperado
 

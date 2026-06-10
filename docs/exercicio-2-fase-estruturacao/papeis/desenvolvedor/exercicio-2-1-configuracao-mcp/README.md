@@ -13,7 +13,7 @@ Antes de começar a codar, você precisa configurar os MCP servers que vão perm
 
 ### Contexto Base
 - O cenário completo
-- A estrutura do repositório e o exemplo mínimo de configuração MCP (ver **Anexo C**, seção "Exemplo mínimo de configuração MCP")
+- A estrutura do repositório e o exemplo mínimo de configuração MCP (ver **Anexo C** (docs/anexos/anexo-c-estrutura-repositorio.md), seção "Exemplo mínimo de configuração MCP")
 - A lista de ferramentas e serviços que o time usa:
   - GitHub (`db1/novatech-assistant`) — repositório do projeto
   - Azure AI Search — base vetorial de documentos

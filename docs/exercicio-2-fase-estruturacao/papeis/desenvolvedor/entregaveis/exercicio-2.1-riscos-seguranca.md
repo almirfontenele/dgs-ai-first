@@ -44,6 +44,18 @@ Se Azure AI Search, Azure OpenAI ou Azure DevOps forem configurados com credenci
 - Centralizar segredos em um cofre de segredos, nunca em texto plano.
 - Registrar auditoria mínima de uso sem expor payload completo.
 
+## Processo com Copilot
+
+**Prompt inicial:** "Para um projeto com MCP servers de GitHub, filesystem, Azure AI Search, Azure OpenAI, Azure DevOps e Confluence, quais são os principais riscos de segurança e como mitigá-los? Considere que agentes locais podem repassar conteúdo a modelos em nuvem."
+
+**Output gerado:** O Copilot listou 5 riscos genéricos: "exposição de credenciais", "acesso não autorizado", "injeção de prompt", "fuga de dados" e "logging excessivo". As mitigações eram igualmente genéricas ("usar HTTPS", "aplicar autenticação forte").
+
+**O que foi descartado:** Os 5 riscos genéricos foram inteiramente descartados — não refletiam o contexto NovaTech e seriam inúteis como guia operacional.
+
+**O que foi escrito manualmente:** Os três riscos do documento (Confluence com dados do cliente repassados a modelo cloud, filesystem com escopo amplo expondo `.env`, credenciais Azure superprivilegiadas) foram identificados analisando cada server do mapeamento e perguntando "o que acontece se este server for abusado ou mal configurado no contexto específico do projeto?"
+
+**Iteração:** Um segundo prompt pediu ao Copilot para sugerir controles técnicos específicos para o risco de Confluence. O output sugeriu `maxResultsPerQuery` e rate limiting por agente — controles concretos que foram incorporados nas mitigações do Risco 1.
+
 ## 3. Conclusão
 
 Os principais riscos de MCP neste projeto vêm de acesso excessivo a conteúdo sensível e de credenciais com escopo maior do que o necessário. O desenho recomendado é manter cada servidor no menor raio de ação possível, com leitura por padrão, allowlists explícitas e auditoria compatível com o uso do ambiente de desenvolvimento.
