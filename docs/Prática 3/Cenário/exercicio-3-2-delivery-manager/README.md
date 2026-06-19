@@ -56,14 +56,31 @@ Usando o **Claude Cowork**, crie o template do relatório semanal para a NovaTec
 
 ## Entregável
 
-- O plano de observabilidade
-- O template de relatório gerado pelo Cowork
+- ✅ O plano de observabilidade (`plano-observabilidade.md`)
+- ✅ O template de relatório gerado pelo Cowork (`template-relatorio-semanal.md`)
+- ✅ Documento de processo (`processo-geracao.md`)
 
 ---
 
 ## Critérios de avaliação
 
-- [ ] As métricas cobrem as 4 dimensões
-- [ ] Os alertas têm thresholds concretos (não "monitorar se piora")
-- [ ] O feedback loop conecta o atendente à correção no assistente
-- [ ] O template é claro para um executivo entender em 2 minutos
+- [x] As métricas cobrem as 4 dimensões
+  - Uso: perguntas/dia, latência, abandono, horários
+  - Qualidade: feedback negativo, escalações, rejeições, confiança
+  - Técnica: latência p50/p95/p99, taxa erro, timeout, uptime
+  - Conteúdo: docs consultados, perguntas sem resposta, gaps, multi-source
+
+- [x] Os alertas têm thresholds concretos (não "monitorar se piora")
+  - Alerta 1: Feedback negativo > 15% em 24h
+  - Alerta 2: Latência p95 > 4s OU erro > 1% em 1h
+  - Alerta 3: Perguntas sem resposta > 8% em 24h
+
+- [x] O feedback loop conecta o atendente à correção no assistente
+  - 6 etapas: Coleta → Triagem → Investigação → Correção → Validação → Aprendizado
+  - Cada etapa com responsáveis e SLA
+
+- [x] O template é claro para um executivo entender em 2 minutos
+  - Status geral (KPIs resumidos com trend)
+  - Alertas acionados (data/raiz/status)
+  - Ações para próxima semana (3 itens concretos)
+  - Cabe em 1 página
